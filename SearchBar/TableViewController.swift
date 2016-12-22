@@ -16,7 +16,7 @@ enum selectedScope:Int {
 
 class TableViewController: UITableViewController, UISearchBarDelegate {
 
-    
+    let initialDataAry:[Model] = Model.generateModelArray()
     var dataAry:[Model] = Model.generateModelArray()
     
     override func viewDidLoad() {
@@ -36,7 +36,7 @@ class TableViewController: UITableViewController, UISearchBarDelegate {
     // MARK: - search bar delegate
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if searchText.isEmpty {
-            dataAry = Model.generateModelArray()
+            dataAry = initialDataAry
             self.tableView.reloadData()
         }else {
             filterTableView(ind: searchBar.selectedScopeButtonIndex, text: searchText)
@@ -46,17 +46,20 @@ class TableViewController: UITableViewController, UISearchBarDelegate {
     func filterTableView(ind:Int,text:String) {
         switch ind {
         case selectedScope.name.rawValue:
-            dataAry = dataAry.filter({ (mod) -> Bool in
+            //fix of not searching when backspacing
+            dataAry = initialDataAry.filter({ (mod) -> Bool in
                 return mod.imageName.lowercased().contains(text.lowercased())
             })
             self.tableView.reloadData()
         case selectedScope.year.rawValue:
-            dataAry = dataAry.filter({ (mod) -> Bool in
+            //fix of not searching when backspacing
+            dataAry = initialDataAry.filter({ (mod) -> Bool in
                 return mod.imageYear.lowercased().contains(text.lowercased())
             })
             self.tableView.reloadData()
         case selectedScope.by.rawValue:
-            dataAry = dataAry.filter({ (mod) -> Bool in
+            //fix of not searching when backspacing
+            dataAry = initialDataAry.filter({ (mod) -> Bool in
                 return mod.imageBy.lowercased().contains(text.lowercased())
             })
             self.tableView.reloadData()
