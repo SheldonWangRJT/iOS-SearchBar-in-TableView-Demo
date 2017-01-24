@@ -98,6 +98,13 @@ class TableViewController: UITableViewController, UISearchBarDelegate {
         return cell
     }
 
+    //add delegate method for pushing to new detail controller
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "DetailViewController") as! DetailViewController
+        vc.dataModel = dataAry[indexPath.row]
+        self.navigationController?.pushViewController(vc, animated: true)
+        
+    }
 
 
 }
